@@ -1,0 +1,97 @@
+Dream EEG and Mentation (DREAM) data set
+
+
+---Data set information---
+
+Common name: LODE
+Full name: The Language of Dreams
+Authors: Valentina Elce, Damiana Bergamo, Giulia Avvenuti, Michele Bellesi, Giulio Bernardi
+Location: Italy
+Year: 2020 - Ongoing
+Set ID: 3
+Amendment: 0
+Corresponding author ID: 6
+
+Previous publications:
+N/A
+
+Correspondence:
+For information about the study or to request access to additional data, please contact Giulio Bernardi, IMT School for Advanced Studies Lucca, giulio.bernardi@imtlucca.it
+
+
+---Metadata---
+
+Key ID: 3
+Date entered: 2022-11-03T09:21:31+00:00
+Number of samples: 190
+Number of subjects: 28
+Proportion REM: 33%
+Proportion N1: 4%
+Proportion N2: 62%
+Proportion experience: 62%
+Proportion no-experience: 31%
+Proportion healthy: 100%
+Provoked awakening: No
+Time of awakening: Morning
+Form of response: Free
+Date approved: 2022-11-03T09:22:12+00:00
+
+
+---How to decode data files---
+
+The folder "Questionnaires" contains the total scores for Pittsburgh Sleep Quality Index (PSQI), Eppworth Sleepiness Scale (ESS), and Morningness-Eveningness Questionnaire, in CSV files. For PSQI, the 7 classical subcomponents (subjective sleep quality, sleep latency, sleep duration, sleep efficiency, sleep disturbances, use of sleeping medication, and daytime dysfunction) are included in addition to the total score.
+
+
+--Treatment group codes--
+
+N/A
+
+
+---Experimental description---
+
+Important Note: This is an ongoing project (current version: 0.3, June 2022). Data collection is expected to reach an end in 2023. The dataset will be updated with additional subjects as soon as these are collected and processed. Additional data -including data obtained from cognitive tests and questionnaires- will be made available at the end of the project.
+
+The study involves only heatlhy adult subjects. Specifically, the following inclusion criteria are applied: age 18-65, inclusive; relatively regular sleep-wake patterns; Italian only as mother tongue. The following exclusion criteria are also applied: less than 6 or more than 9 hours of sleep per night (on average); neurological, psychiatric or neurodegenerative diseases; major sleep disorders; use of medications that could affect sleep patterns, brain functioning, or behavior; known alterations of dream or imagery generation; alcohol or drug abuse; pregnancy or breastfeeding.
+
+All volunteers undergo an anamnestic interview and are requested to complete several questionnaires including Pittsburgh Sleep Quality Index (PSQI), Epworth Sleepiness Scale (ESS) and Morningness-Eveningness Questionnaire.
+
+Upon recruitment in the study, participants are provided with a DREEM portable EEG system, an actigraphy (MotionWatch8, CamNtech) and a voice recorder. Then, they are instructed to wear the DREEM each night at home for a minimum of 14 days and to record each morning, upon awakening from sleep, "everything that was going through their mind just before they woke up, everything they remember, every experience or thought they had before awakening." All participants are instructed to produce a verbal report also in those cases in which they had no experiences (no recall), or they had experiences the details of which they are not able to remember (white dreams).
+
+At the end of the 14-days period, all volunteers participate in an additional experimental visit in the laboratory, during which they complete a battery of behavioral and cognitive tests.
+
+
+--DREAM categorization procedure--
+
+All verbal reports are evaluated and categorized as: "experience" [2], if the participant was able to remember at least one content of any kind (perceptual experience, thought, emotion, etc.); "without recall" [1], if the participant reported the impression of having had an experience, but no contents were recalled; "No experience" [0], if the participant reported no memory or impression of having had an experience before the awakening.
+
+
+---Technical details---
+
+All recordings were performed in Italy, in the participants' home environment, and may contain line noise at 50 Hz. A list of (manually marked) EEG bad channels is included in the last column of the Records.csv file (see Data preprocessing section).
+
+Pulse-Oximeter recordings of subject DL049 - night 4 were lost due to technical issues and were replaced with zero-filled timeseries.
+
+--Data acquisition--
+
+The DREEM device is equipped with five EEG dry electrodes (from which 7 derivations are obtained: Fp1-O1, Fp1-O2, Fp1-F7, F8-F7, F7-O1, F8-O2, Fp1-F8) to record brain activity during sleep, a pulse sensor, for measuring blood oxygen saturation and monitoring heart rate and a 3D accelerometer to measure head position and respiratory rate. EEG signals are recorded with 250 Hz sampling frequency while non-EEG signals are recorded with 50 Hz sampling frequency.
+
+Each EDF file contains the following signals (in this specific order): EEG Fp1-O1, EEG Fp1-O2, EEG Fp1-F7, EEG F8-F7, EEG F7-O1, EEG F8-O2, EEG Fp1-F8, Accelerometer-X, Accelerometer-Y, Accelerometer-Z, Pulse-Oximeter (red), Pulse-Oximeter (infrared).
+
+--Data preprocessing--
+
+From each recording, we extracted 140 seconds of data up to the moment of awakening. In order to allow the inclusion of EEG and non-EEG signals within the same EDF file, non-EEG signals were upsampled to 250 Hz using the MATLAB "resample" function. All signals were detrended using robust detrending Cheveigné and Arzounian, NeuroImage, 2018). The raw recordings (including uncut, whole-night data) may be requested by contacting the corresponding author.
+
+The moment of awakening estimated from EEG signals was compared with the one derived from actigraphic data, as calculated by the MotionWare Sleep Analysis software (CamNtech). All cases presenting a mismatch greater than +/- 5 minutes between the two estimates were re-evaluated and subsequently rejected if we could not exclude removal of the DREEM band by the participant before the actual final awakening.
+
+The time of day of each verbal recording was compared with the last awakening's timing as determined based on EEG data inspection. Only verbal reports collected within 1 hour from the moment of awakening were retained in order to exclude delayed reports that may reflect false memories or elaborations/interpretations of the original experience, while also accounting for factors that may limit the possibility to provide an immediate verbal report in the home environment. This time threshold was not applied for "no experience" reports. Most reports were provided within 10 minutes from the moment of awakening.
+
+We excluded awakenings corresponding to "experience" or "experience without recall" reports in which the participant only described (potential) experiences that occurred earlier during the night (e.g., "I am not sure about my last experience, but earlier tonight I dreamed of [...]).
+
+Sleep scoring was initially performed by the embedded automatic algorithm of the DREEM headband (see Arnal et al., SLEEP, 2020). A human operator re-inspected all recordings and changed the stage attributed to the last sleep epoch in case of clear mistakes of the automated algorithm. Specifically, the following changes were made:
+
+REM --> N2 for DL021 night 15, DL024 night 3, DL027 night 14, DL042 night 9, DL055 nights 6 and 12, DL062 night 6;
+N2 --> REM for DL030 night 11, DL070 night 15;
+N2 --> N1 for DL005 night 9;
+N1 --> N2 for DL017 night 9.
+
+The EEG signals were visually inspected to mark bad channels and relevant artifacts. Of note, data inspection was performed using bandpass filtered signals (0.5-35Hz, Kaiser window FIR filter). Rapid eye movements of REM sleep were not marked unless they were associated with major artifacts (e.g., signal amplitude greater than 300 µV). Only data segments with at least two "good" EEG channels were retained. Importantly, the quality of non-EEG signals was not assessed.
